@@ -40,7 +40,7 @@ A beautiful, modern web application for monitoring API endpoints with automated 
 
 ## 🚀 Quick Start
 
-### Installation
+### Local Installation
 
 1. **Clone or Download** the project files
 2. **Open `index.html`** in any modern web browser
@@ -56,6 +56,46 @@ cd api_watchdog
 # Open in browser (or use a local server)
 open index.html
 ```
+
+### 🌐 Deploy to Render (Recommended)
+
+**One-Click Deployment:**
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+**Manual Deployment Steps:**
+
+1. **Push to GitHub:**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/yourusername/api-watchdog.git
+   git push -u origin main
+   ```
+
+2. **Connect to Render:**
+   - Go to [render.com](https://render.com) and sign up/login
+   - Click "New +" → "Static Site"
+   - Connect your GitHub repository
+   - Select the `api-watchdog` repository
+
+3. **Configure Deployment:**
+   - **Name:** `api-watchdog` (or your preferred name)
+   - **Branch:** `main`
+   - **Build Command:** `echo "No build required"`
+   - **Publish Directory:** `./`
+   - Click "Create Static Site"
+
+4. **Your site will be live at:**
+   ```
+   https://your-app-name.onrender.com
+   ```
+
+**Alternative Deployment Platforms:**
+- **Netlify:** Drag & drop the folder to [netlify.com/drop](https://app.netlify.com/drop)
+- **Vercel:** Run `npx vercel` in the project directory
+- **GitHub Pages:** Push to GitHub and enable Pages in repository settings
 
 ### First Steps
 
@@ -217,6 +257,13 @@ Data is stored in browser's localStorage:
 
 ## 🔧 Technical Details
 
+### Deployment Files
+
+**For Render deployment, the following files are included:**
+- `render.yaml` - Render configuration
+- `_redirects` - Routing rules for SPA behavior
+- `package.json` - Project metadata for hosting platforms
+
 ### Browser Compatibility
 
 - ✅ **Chrome** 80+
@@ -299,6 +346,21 @@ npx http-server
 # Open browser
 open http://localhost:8000
 ```
+
+### Production Deployment
+
+**Environment Considerations:**
+- ✅ **HTTPS Required** - For browser notifications and secure API calls
+- ✅ **CORS Handling** - Configure your APIs to allow requests from your domain
+- ✅ **Static Hosting** - No server-side processing required
+- ✅ **CDN Ready** - All assets can be cached by CDN
+
+**Post-Deployment Checklist:**
+1. ✅ Test all API endpoints from the deployed URL
+2. ✅ Verify browser notifications work (HTTPS required)
+3. ✅ Check localStorage persistence across page reloads
+4. ✅ Test responsive design on mobile devices
+5. ✅ Confirm cron jobs execute properly
 
 ### Code Structure
 

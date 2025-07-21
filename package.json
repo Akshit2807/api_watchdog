@@ -1,0 +1,23 @@
+{
+  "name": "api-watchdog",
+  "version": "1.0.0",
+  "description": "Professional API Monitoring & Testing Platform",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build required'",
+    "start": "echo 'Static site deployed'"
+  },
+  "keywords": [
+    "api",
+    "monitoring",
+    "testing",
+    "cron",
+    "dashboard",
+    "analytics"
+  ],
+  "author": "API Watchdog",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  }
+}
