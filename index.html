@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Watchdog - Professional API Monitoring & Testing</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>API Watchdog</span>
+                </div>
+                <div class="header-actions">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#endpoints" class="nav-item" data-page="endpoints">
+                    <i class="fas fa-plug"></i>
+                    <span>API Endpoints</span>
+                </a>
+                <a href="#scheduler" class="nav-item" data-page="scheduler">
+                    <i class="fas fa-clock"></i>
+                    <span>Cron Scheduler</span>
+                </a>
+                <a href="#testing" class="nav-item" data-page="testing">
+                    <i class="fas fa-flask"></i>
+                    <span>API Testing</span>
+                </a>
+                <a href="#monitoring" class="nav-item" data-page="monitoring">
+                    <i class="fas fa-eye"></i>
+                    <span>Monitoring</span>
+                </a>
+                <a href="#settings" class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div class="page active" id="dashboard">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Monitor your API endpoints in real-time</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalEndpoints">0</h3>
+                            <p>Total Endpoints</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="activeEndpoints">0</h3>
+                            <p>Active Monitors</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="scheduledJobsCount">0</h3>
+                            <p>Scheduled Jobs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon error">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="failedRequests">0</h3>
+                            <p>Failed Requests</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Response Time Trends</h3>
+                        <div class="chart-placeholder">
+                            <canvas id="responseTimeChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Status Code Distribution</h3>
+                        <div class="chart-placeholder">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Endpoints Page -->
+            <div class="page" id="endpoints">
+                <div class="page-header">
+                    <h1>API Endpoints</h1>
+                    <button class="btn btn-primary" id="addEndpointBtn">
+                        <i class="fas fa-plus"></i>
+                        Add Endpoint
+                    </button>
+                </div>
+
+                <div class="endpoints-grid" id="endpointsGrid">
+                    <!-- Endpoint cards will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Cron Scheduler Page -->
+            <div class="page" id="scheduler">
+                <div class="page-header">
+                    <h1>Cron Scheduler</h1>
+                    <button class="btn btn-primary" id="addScheduleBtn">
+                        <i class="fas fa-plus"></i>
+                        Add Schedule
+                    </button>
+                </div>
+
+                <div class="scheduler-content">
+                    <div class="scheduled-jobs" id="scheduledJobs">
+                        <!-- Scheduled jobs will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Testing Page -->
+            <div class="page" id="testing">
+                <div class="page-header">
+                    <h1>API Testing</h1>
+                    <p>Test your API endpoints manually</p>
+                </div>
+
+                <div class="testing-interface">
+                    <div class="request-panel">
+                        <h3>Request</h3>
+                        <div class="form-group">
+                            <label>Method</label>
+                            <select id="testMethod">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                                <option value="PATCH">PATCH</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>URL</label>
+                            <input type="url" id="testUrl" placeholder="https://api.example.com/endpoint">
+                        </div>
+                        <div class="form-group">
+                            <label>Headers</label>
+                            <textarea id="testHeaders" placeholder='{"Content-Type": "application/json"}'></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Body</label>
+                            <textarea id="testBody" placeholder="Request body (JSON, form data, etc.)"></textarea>
+                        </div>
+                        <button class="btn btn-primary" id="sendTestRequest">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Request
+                        </button>
+                    </div>
+
+                    <div class="response-panel">
+                        <h3>Response</h3>
+                        <div class="response-info">
+                            <span class="status-code" id="responseStatus">-</span>
+                            <span class="response-time" id="responseTime">-</span>
+                        </div>
+                        <div class="response-content">
+                            <pre id="responseBody">Send a request to see the response</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring Page -->
+            <div class="page" id="monitoring">
+                <div class="page-header">
+                    <h1>Real-time Monitoring</h1>
+                    <div class="monitoring-controls">
+                        <button class="btn btn-secondary" id="pauseMonitoring">
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                        <button class="btn btn-secondary" id="clearLogs">
+                            <i class="fas fa-trash"></i>
+                            Clear Logs
+                        </button>
+                    </div>
+                </div>
+
+                <div class="monitoring-content">
+                    <div class="logs-container" id="logsContainer">
+                        <!-- Monitoring logs will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="page" id="settings">
+                <div class="page-header">
+                    <h1>Settings</h1>
+                    <p>Configure your API monitoring preferences</p>
+                </div>
+
+                <div class="settings-content">
+                    <div class="settings-section">
+                        <h3>General Settings</h3>
+                        <div class="form-group">
+                            <label>Default Timeout (seconds)</label>
+                            <input type="number" id="defaultTimeout" value="30">
+                        </div>
+                        <div class="form-group">
+                            <label>Retry Attempts</label>
+                            <input type="number" id="retryAttempts" value="3">
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Notifications</h3>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="emailNotifications">
+                                <span class="checkmark"></span>
+                                Email Notifications
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="browserNotifications">
+                                <span class="checkmark"></span>
+                                Browser Notifications
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="saveSettings">
+                        <i class="fas fa-save"></i>
+                        Save Settings
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="endpointModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add/Edit Endpoint</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="endpointForm">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="endpointName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input type="url" id="endpointUrl" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Method</label>
+                        <select id="endpointMethod">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                            <option value="PATCH">PATCH</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Input Type</label>
+                        <div class="input-type-grid">
+                            <div class="input-type-option" data-type="none">
+                                <i class="fas fa-ban"></i>
+                                <span>None</span>
+                            </div>
+                            <div class="input-type-option" data-type="text">
+                                <i class="fas fa-font"></i>
+                                <span>Text</span>
+                            </div>
+                            <div class="input-type-option" data-type="image">
+                                <i class="fas fa-image"></i>
+                                <span>Image</span>
+                            </div>
+                            <div class="input-type-option" data-type="video">
+                                <i class="fas fa-video"></i>
+                                <span>Video</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="endpointInputType" value="none">
+                    </div>
+                    <div class="form-group">
+                        <label>Headers</label>
+                        <textarea id="endpointHeaders" placeholder='{"Content-Type": "application/json"}'></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Body Template</label>
+                        <textarea id="endpointBody" placeholder="Request body template"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelEndpoint">Cancel</button>
+                <button class="btn btn-primary" id="saveEndpoint">Save Endpoint</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="scheduleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Schedule Endpoint</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm">
+                    <div class="form-group">
+                        <label>Select Endpoint</label>
+                        <select id="scheduleEndpoint" required>
+                            <option value="">Select an endpoint...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Interval</label>
+                        <div class="interval-options">
+                            <div class="interval-option" data-interval="30">30 seconds</div>
+                            <div class="interval-option" data-interval="60">1 minute</div>
+                            <div class="interval-option" data-interval="300">5 minutes</div>
+                            <div class="interval-option" data-interval="900">15 minutes</div>
+                            <div class="interval-option" data-interval="1800">30 minutes</div>
+                            <div class="interval-option" data-interval="3600">1 hour</div>
+                        </div>
+                        <input type="hidden" id="scheduleInterval" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Custom Interval (seconds)</label>
+                        <input type="number" id="customInterval" min="10" placeholder="Custom interval in seconds">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelSchedule">Cancel</button>
+                <button class="btn btn-primary" id="saveSchedule">Save Schedule</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="scheduleLogsModal">
+        <div class="modal-content schedule-logs-modal">
+            <div class="modal-header">
+                <h2 id="scheduleLogsTitle">Schedule Logs</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="schedule-logs-stats" id="scheduleLogsStats">
+                    <!-- Stats will be populated by JavaScript -->
+                </div>
+                <div class="schedule-logs-controls">
+                    <button class="btn btn-secondary" id="clearScheduleLogs">
+                        <i class="fas fa-trash"></i>
+                        Clear Logs
+                    </button>
+                    <button class="btn btn-secondary" id="exportScheduleLogs">
+                        <i class="fas fa-download"></i>
+                        Export CSV
+                    </button>
+                </div>
+                <div class="schedule-logs-container" id="scheduleLogsContainer">
+                    <!-- Logs will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="closeScheduleLogs">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
